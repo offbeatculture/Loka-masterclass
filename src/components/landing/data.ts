@@ -3,7 +3,7 @@ import { Brain, Sparkles, Heart, Target, type LucideIcon } from "lucide-react";
 export const EVENT = {
   date: "15th May 2026",
   time: "6:00 AM to 12:30 PM IST",
-  duration: "3 Hours",
+  duration: "90 mins",
   language: "English",
   pricePrev: "₹1299",
   price: "₹99",
@@ -25,12 +25,40 @@ export const WANT_POINTS: string[] = [
   "See a Positive Change in Health and Mindset",
 ];
 
-export type Learning = { icon: LucideIcon; title: string; desc: string };
+// export type Learning = { icon: LucideIcon; title: string; desc: string };
+// export const LEARNINGS: Learning[] = [
+//   { icon: Brain, title: " Your Current Financial Realty", desc: "You will see the exact connection between what you believe about money and what your financial reality looks like." },
+//   { icon: Sparkles, title: "Master the Art of Manifestation", desc: "Learn the exact mindset, energy and daily rituals to bring your dream life into reality, faster than you think." },
+//   { icon: Heart, title: "Attract Healthy Relationships", desc: "Reconnect with your inner self and create deep, loving and lasting bonds — both romantic and platonic." },
+//   { icon: Target, title: "Proven 7-Step Formula to Achieve Any Goal", desc: "A clear, repeatable framework to set, pursue and accomplish goals in any area of your life with confidence." },
+// ];
+export type Learning = {
+  image?: string;
+  title: string;
+  desc: string;
+};
+
 export const LEARNINGS: Learning[] = [
-  { icon: Brain, title: "Break Free from Limiting Beliefs", desc: "Identify and dissolve the subconscious patterns that keep you stuck, so you can step into a new version of yourself." },
-  { icon: Sparkles, title: "Master the Art of Manifestation", desc: "Learn the exact mindset, energy and daily rituals to bring your dream life into reality, faster than you think." },
-  { icon: Heart, title: "Attract Healthy Relationships", desc: "Reconnect with your inner self and create deep, loving and lasting bonds — both romantic and platonic." },
-  { icon: Target, title: "Proven 7-Step Formula to Achieve Any Goal", desc: "A clear, repeatable framework to set, pursue and accomplish goals in any area of your life with confidence." },
+  {
+    image: "",
+    title: "Your Current Financial Reality",
+    desc: "You will see the exact connection between what you believe about money and what your financial reality looks like.",
+  },
+  {
+    image: "",
+    title: "Master the Art of Manifestation",
+    desc: "Learn the exact mindset, energy and daily rituals to bring your dream life into reality, faster than you think.",
+  },
+  {
+    image: "",
+    title: "Attract Healthy Relationships",
+    desc: "Reconnect with your inner self and create deep, loving and lasting bonds — both romantic and platonic.",
+  },
+  {
+    image: "",
+    title: "Proven 7-Step Formula to Achieve Any Goal",
+    desc: "A clear, repeatable framework to set, pursue and accomplish goals in any area of your life with confidence.",
+  },
 ];
 
 export type Bonus = { title: string; desc: string; value: string };
@@ -59,4 +87,45 @@ export const FAQS: Faq[] = [
   { q: "I made the payment but did not receive any email.", a: "Please check your spam folder. If you still cannot find it, write to our support team and we will help you within 24 hours." },
   { q: "How will I join the masterclass?", a: "Once you register, we'll send you a link to join the live session via email and WhatsApp." },
   { q: "When will I get the bonuses?", a: "You will receive the bonuses after attending the masterclass." },
+];
+
+
+export const BREAK_FREE_POINTS = [
+  "The same financial struggle repeating month after month",
+  "The shame of never being able to talk about money openly",
+  "Feeling small every time money comes up",
+  "The exhaustion of giving to everyone — and having nothing left for yourself",
+  "Working hard your whole life, and still feeling behind",
+  "Watching your salary disappear before you can do anything with it",
+  "The generational story that people like us don’t become wealthy",
+];
+export const LIFE_RIGHT_NOW = [
+  {
+    title: "It’s very hard to earn money.",
+    desc: "You believe money only comes through extreme hard work. You’ve done that. And it still feels out of reach.",
+  },
+  {
+    title: "I can’t be rich.",
+    desc: "Somewhere you accepted a limit for yourself. A certain income. A certain house. A certain life. Anything beyond that feels like it’s not meant for you.",
+  },
+  {
+    title: "I guess this is my life story.",
+    desc: "Your parents struggled. Their parents struggled. And without anyone telling you — you decided this was going to be your story too.",
+  },
+  {
+    title: "I am not lucky enough.",
+    desc: "You studied. You worked hard. You did everything right. But the money that came to others — somehow never came to you.",
+  },
+  {
+    title: "Money is not in my fate.",
+    desc: "You’ve prayed. You’ve done everything it takes. And still — you’ve quietly accepted that this is what is written for you.",
+  },
+  {
+    title: "Money is not something to discuss openly.",
+    desc: "In your home, money was never a conversation. It was either a fight or a silence. You grew up never learning. And now you carry that silence alone.",
+  },
+  {
+    title: "Receiving money feels wrong.",
+    desc: "A bonus. A gift. An unexpected windfall. And immediately something inside tightens. Like it doesn’t belong to you. Like you need to give it away before someone notices.",
+  },
 ];

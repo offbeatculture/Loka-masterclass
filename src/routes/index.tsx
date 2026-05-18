@@ -8,6 +8,13 @@ import { BonusesSection } from "@/components/landing/BonusesSection";
 import { StoriesSection } from "@/components/landing/StoriesSection";
 import { FaqSection } from "@/components/landing/FaqSection";
 import { Footer } from "@/components/landing/Footer";
+import {LifeRightNowSection} from "@/components/landing/LifeRightNowSection"
+import { CostSection } from "@/components/landing/CostSection";
+import { AfterSession } from "@/components/landing/AfterSession";
+import { RegisterForm} from "@/components/landing/RegisterForm";
+import { WrittenTestimonialsSection } from "@/components/landing/WrittenTestimonialsSection";
+import { VideoTestimonialsSection } from "@/components/landing/VideoTestimonialsSection";
+import { TestimonialScreenshotSlider } from "@/components/landing/TestimonialScreenshotSlider";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -25,18 +32,26 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="min-h-screen font-sans bg-background text-foreground">
-      <div className="bg-primary text-primary-foreground text-center text-xs md:text-sm py-2 px-4">
+      {/* <div className="bg-primary text-primary-foreground text-center text-xs md:text-sm py-2 px-4">
         Heal and Manifest Masterclass
-      </div>
+      </div> */}
       <HeroSection />
+      <RegisterForm />
+      <LifeRightNowSection/>
+      <CostSection />
       <JoinSection />
       <LearnSection />
-      <TestimonialsSection />
+      <AfterSession />
       <CoachSection />
-      <BonusesSection />
-      <StoriesSection />
+      <WrittenTestimonialsSection />
+     <TestimonialScreenshotSlider /> 
+      <VideoTestimonialsSection/>
       <FaqSection />
-      <Footer />
+       {/* <TestimonialsSection /> */}
+      {/* <BonusesSection /> */}
+      {/* <StoriesSection /> */}
+      {/* <FaqSection /> */}
+      {/* <Footer /> */}
     </main>
   );
 }
