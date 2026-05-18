@@ -6,7 +6,7 @@ export function RegisterForm() {
   const [message, setMessage] = useState("");
 
   const WEBHOOK_URL =
-    "https://offbeatn8n.coachswastik.com/webhook/lokha-masterclass";
+    "https://offbeatn8n.coachswastik.com/webhook/loka-masterclass";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
