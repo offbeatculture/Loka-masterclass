@@ -2,6 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
+
 export const Route = createFileRoute("/thank-you")({
   component: ThankYouPage,
 });
@@ -11,9 +17,16 @@ function ThankYouPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Lead");
+    }
+  }, []);
+
+  useEffect(() => {
     async function fetchWhatsappLink() {
       try {
-        const csvUrl = "https://docs.google.com/spreadsheets/d/1G-c1j0iATcTAdbHzWWI4b8-vVfrQJvNKvQ5KlyvBTkU/export?format=csv&gid=189476298";
+        const csvUrl =
+          "https://docs.google.com/spreadsheets/d/1G-c1j0iATcTAdbHzWWI4b8-vVfrQJvNKvQ5KlyvBTkU/export?format=csv&gid=189476298";
 
         const response = await fetch(csvUrl);
 
@@ -37,9 +50,9 @@ function ThankYouPage() {
         const firstDataRow = rows[1] || [];
 
         const whatsappIndex = headers.findIndex((h) => {
-  const header = h.toLowerCase().trim();
-  return header === "wa link" || header === "whatsapp_link";
-});
+          const header = h.toLowerCase().trim();
+          return header === "wa link" || header === "whatsapp_link";
+        });
 
         const link =
           whatsappIndex !== -1 ? firstDataRow[whatsappIndex] || "" : "";
