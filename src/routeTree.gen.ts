@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
+import { Route as MmaFb1RouteImport } from './routes/mma-fb1'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
   path: '/thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MmaFb1Route = MmaFb1RouteImport.update({
+  id: '/mma-fb1',
+  path: '/mma-fb1',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/mma-fb1': typeof MmaFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mma-fb1': typeof MmaFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/mma-fb1': typeof MmaFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/thank-you'
+  fullPaths: '/' | '/mma-fb1' | '/thank-you'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/thank-you'
-  id: '__root__' | '/' | '/thank-you'
+  to: '/' | '/mma-fb1' | '/thank-you'
+  id: '__root__' | '/' | '/mma-fb1' | '/thank-you'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MmaFb1Route: typeof MmaFb1Route
   ThankYouRoute: typeof ThankYouRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/thank-you'
       fullPath: '/thank-you'
       preLoaderRoute: typeof ThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mma-fb1': {
+      id: '/mma-fb1'
+      path: '/mma-fb1'
+      fullPath: '/mma-fb1'
+      preLoaderRoute: typeof MmaFb1RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MmaFb1Route: MmaFb1Route,
   ThankYouRoute: ThankYouRoute,
 }
 export const routeTree = rootRouteImport
