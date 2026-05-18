@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
+import { Route as MmaTyFb1RouteImport } from './routes/mma-ty-fb1'
 import { Route as MmaFb1RouteImport } from './routes/mma-fb1'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
   path: '/thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MmaTyFb1Route = MmaTyFb1RouteImport.update({
+  id: '/mma-ty-fb1',
+  path: '/mma-ty-fb1',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MmaFb1Route = MmaFb1RouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/mma-fb1': typeof MmaFb1Route
+  '/mma-ty-fb1': typeof MmaTyFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mma-fb1': typeof MmaFb1Route
+  '/mma-ty-fb1': typeof MmaTyFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/mma-fb1': typeof MmaFb1Route
+  '/mma-ty-fb1': typeof MmaTyFb1Route
   '/thank-you': typeof ThankYouRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mma-fb1' | '/thank-you'
+  fullPaths: '/' | '/mma-fb1' | '/mma-ty-fb1' | '/thank-you'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mma-fb1' | '/thank-you'
-  id: '__root__' | '/' | '/mma-fb1' | '/thank-you'
+  to: '/' | '/mma-fb1' | '/mma-ty-fb1' | '/thank-you'
+  id: '__root__' | '/' | '/mma-fb1' | '/mma-ty-fb1' | '/thank-you'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MmaFb1Route: typeof MmaFb1Route
+  MmaTyFb1Route: typeof MmaTyFb1Route
   ThankYouRoute: typeof ThankYouRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/thank-you'
       fullPath: '/thank-you'
       preLoaderRoute: typeof ThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mma-ty-fb1': {
+      id: '/mma-ty-fb1'
+      path: '/mma-ty-fb1'
+      fullPath: '/mma-ty-fb1'
+      preLoaderRoute: typeof MmaTyFb1RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mma-fb1': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MmaFb1Route: MmaFb1Route,
+  MmaTyFb1Route: MmaTyFb1Route,
   ThankYouRoute: ThankYouRoute,
 }
 export const routeTree = rootRouteImport
