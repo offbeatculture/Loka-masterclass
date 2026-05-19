@@ -6,7 +6,7 @@ export function RegisterForm() {
   const [message, setMessage] = useState("");
 
   const WEBHOOK_URL =
-    "https://offbeatn8n.coachswastik.com/webhook-test/loka-masterclass";
+    "https://offbeatn8n.coachswastik.com/webhook/loka-masterclass";
 
   function getUtmParams() {
     const params = new URLSearchParams(window.location.search);
