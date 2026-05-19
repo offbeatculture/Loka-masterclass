@@ -51,7 +51,7 @@ function Index() {
       {/* <BonusesSection /> */}
       {/* <StoriesSection /> */}
       {/* <FaqSection /> */}
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 }
