@@ -4,84 +4,80 @@ import { Calendar, Clock,  Hourglass,Languages } from "lucide-react";
 
 export function HeroSection() {
   const [eventData, setEventData] = useState({
-    date: "",
-    time: "",
-    duration: "",
-    language: "",
-  });
+  date: "",
+  time: "",
+});
+
 
   useEffect(() => {
-    async function fetchEventData() {
-      try {
-        const csvUrl =
-          "https://docs.google.com/spreadsheets/d/e/2PACX-1vQWwf7BYggOD0Sta4wo6rZsFfJuAngk3FUyDoznjIafOzF4qFb01w6VIfyMwoYrU5MfCWBpzm9xd2v8/pub?output=csv";
+  async function fetchEventData() {
+    try {
+      const csvUrl =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQWwf7BYggOD0Sta4wo6rZsFfJuAngk3FUyDoznjIafOzF4qFb01w6VIfyMwoYrU5MfCWBpzm9xd2v8/pub?output=csv";
 
-        const response = await fetch(csvUrl);
+      const response = await fetch(csvUrl);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch CSV");
-        }
-
-        const csvText = await response.text();
-
-        const rows = csvText
-          .trim()
-          .split(/\r?\n/)
-          .map(
-            (row) =>
-              row
-                .match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
-                ?.map((cell) => cell.replace(/^"|"$/g, "").trim()) || []
-          );
-
-        const headers = rows[0] || [];
-        const firstDataRow = rows[1] || [];
-
-        const getValue = (columnName: string) => {
-          const index = headers.findIndex(
-            (h) => h.toLowerCase().trim() === columnName.toLowerCase()
-          );
-
-          return index !== -1 ? firstDataRow[index] || "" : "";
-        };
-
-        setEventData({
-          date: getValue("date"),
-          time: getValue("time"),
-          duration: getValue("duration"),
-          language: getValue("language"),
-        });
-      } catch (error) {
-        console.error("Failed to fetch event data:", error);
+      if (!response.ok) {
+        throw new Error("Failed to fetch CSV");
       }
+
+      const csvText = await response.text();
+
+      const rows = csvText
+        .trim()
+        .split(/\r?\n/)
+        .map(
+          (row) =>
+            row
+              .match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
+              ?.map((cell) => cell.replace(/^"|"$/g, "").trim()) || []
+        );
+
+      const headers = rows[0] || [];
+      const firstDataRow = rows[1] || [];
+
+      const getValue = (columnName: string) => {
+        const index = headers.findIndex(
+          (h) => h.toLowerCase().trim() === columnName.toLowerCase()
+        );
+
+        return index !== -1 ? firstDataRow[index] || "" : "";
+      };
+
+      setEventData({
+        date: getValue("date"),
+        time: getValue("time"),
+      });
+    } catch (error) {
+      console.error("Failed to fetch event data:", error);
     }
+  }
 
-    fetchEventData();
-  }, []);
+  fetchEventData();
+}, []);
 
-  const details = [
-    {
-      icon: Calendar,
-      label: "Date",
-      value: eventData.date || "Loading...",
-    },
-    {
-      icon: Clock,
-      label: "Time",
-      value: eventData.time || "Loading...",
-    },
-    {
-      icon: Hourglass,
-      label: "Duration",
-      value: eventData.duration || "Loading...",
-    },
-    {
-      icon: Languages,
-      label: "Language",
-      value: eventData.language || "Loading...",
-    },
-  ];
-
+const details = [
+  {
+    icon: Calendar,
+    label: "Date",
+    value: eventData.date || "Loading...",
+  },
+  {
+    icon: Clock,
+    label: "Time",
+    value: eventData.time || "Loading...",
+  },
+  {
+    icon: Hourglass,
+    label: "Duration",
+    value: "90 Minutes",
+  },
+  {
+    icon: Languages,
+    label: "Language",
+    value: "Telugu",
+  },
+];
   return (
     <section className="relative w-full overflow-hidden bg-[#eee8e4] px-4 pt-0 pb-12 md:pb-20">
       {/* top pill */}

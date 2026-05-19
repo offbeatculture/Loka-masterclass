@@ -1,12 +1,27 @@
 import { useState } from "react";
-import { User, Mail, Phone } from "lucide-react";
+import { User, Mail, Phone, Briefcase, MessageSquare } from "lucide-react";
 
 export function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const WEBHOOK_URL =
-    "https://offbeatn8n.coachswastik.com/webhook/loka-masterclass";
+    "https://offbeatn8n.coachswastik.com/webhook-test/loka-masterclass";
+
+  function getUtmParams() {
+    const params = new URLSearchParams(window.location.search);
+
+    return {
+      utm_source: params.get("utm_source") || "",
+      utm_medium: params.get("utm_medium") || "",
+      utm_campaign: params.get("utm_campaign") || "",
+      utm_content: params.get("utm_content") || "",
+      utm_term: params.get("utm_term") || "",
+      fbclid: params.get("fbclid") || "",
+      fclid: params.get("fclid") || "",
+      landing_page: window.location.href,
+    };
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,14 +33,18 @@ export function RegisterForm() {
     const name = String(formData.get("lead_name") || "").trim();
     const phone = String(formData.get("lead_phone") || "").trim();
     const email = String(formData.get("lead_email") || "").trim();
+    const profession = String(formData.get("profession") || "").trim();
+    const reason = String(formData.get("reason") || "").trim();
 
-    if (!name || !phone || !email) {
+    if (!name || !phone || !email || !profession || !reason) {
       setMessage("Please fill all details.");
       return;
     }
 
     try {
       setLoading(true);
+
+      const utms = getUtmParams();
 
       const response = await fetch(WEBHOOK_URL, {
         method: "POST",
@@ -36,6 +55,11 @@ export function RegisterForm() {
           name,
           phone,
           email,
+          profession,
+          reason,
+
+          ...utms,
+
           source: "LP Register Form",
           page_url: window.location.href,
           submitted_at: new Date().toISOString(),
@@ -66,7 +90,11 @@ export function RegisterForm() {
             మీ Seat confirm చేసుకోవడానికి details fill చేయండి.
           </p>
 
-          <form onSubmit={handleSubmit} autoComplete="new-password" className="mt-8 space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            autoComplete="new-password"
+            className="mt-8 space-y-5"
+          >
             <div>
               <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
                 Name
@@ -116,7 +144,58 @@ export function RegisterForm() {
               </div>
             </div>
 
-            
+            <div>
+              <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
+                Profession
+              </label>
+              <div className="flex h-[58px] items-center gap-4 rounded-2xl border border-[#d8d0ca] bg-white px-5">
+                <Briefcase className="h-5 w-5 shrink-0 text-[#ad284c]" />
+                <select
+                  name="profession"
+                  defaultValue=""
+                  className="w-full bg-transparent text-[16px] font-semibold text-[#062453] outline-none"
+                >
+                  <option value="" disabled>
+                    Select your profession
+                  </option>
+                  <option value="Business Owner">Business Owner</option>
+                  <option value="Founder / Entrepreneur">
+                    Founder / Entrepreneur
+                  </option>
+                  <option value="Coach / Consultant">
+                    Coach / Consultant
+                  </option>
+                  <option value="Agency Owner">Agency Owner</option>
+                  <option value="D2C / Ecommerce Founder">
+                    D2C / Ecommerce Founder
+                  </option>
+                  <option value="Service Business Owner">
+                    Service Business Owner
+                  </option>
+                  {/* <option value="Retailer">Retailer</option> */}
+                  <option value="Student">Student</option>
+                  <option value="Working Professional">
+                    Working Professional
+                  </option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
+                Reason for Joining
+              </label>
+              <div className="flex min-h-[110px] items-start gap-4 rounded-2xl border border-[#d8d0ca] bg-white px-5 py-4">
+                <MessageSquare className="mt-1 h-5 w-5 shrink-0 text-[#ad284c]" />
+                <textarea
+                  name="reason"
+                  placeholder="Type your reason for joining"
+                  rows={4}
+                  className="w-full resize-none bg-transparent text-[16px] font-semibold text-[#062453] outline-none placeholder:text-[#9aa3b2]"
+                />
+              </div>
+            </div>
 
             <button
               type="submit"
