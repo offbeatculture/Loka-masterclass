@@ -70,7 +70,7 @@ export function RegisterForm() {
         throw new Error("Webhook failed");
       }
 
-      window.location.href = "/thank-you";
+      window.location.href = "/mma-ty-fb1";
     } catch (error) {
       console.error(error);
       setMessage("Something went wrong. Please try again.");
