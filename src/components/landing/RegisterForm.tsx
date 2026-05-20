@@ -6,77 +6,104 @@ export function RegisterForm() {
   const [message, setMessage] = useState("");
 
   const WEBHOOK_URL =
-    "https://offbeatn8n.coachswastik.com/webhook/loka-masterclass";
+  "https://offbeatn8n.coachswastik.com/webhook-test/loka-masterclass";
 
-  function getUtmParams() {
-    const params = new URLSearchParams(window.location.search);
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
 
-    return {
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || "",
-      utm_content: params.get("utm_content") || "",
-      fbclid: params.get("fbclid") || "",
-      fclid: params.get("fclid") || "",
-      landing_page: window.location.href,
-    };
+  return {
+    utm_source: params.get("utm_source") || "",
+    utm_medium: params.get("utm_medium") || "",
+    utm_campaign: params.get("utm_campaign") || "",
+    utm_content: params.get("utm_content") || "",
+    fbclid: params.get("fbclid") || "",
+    fclid: params.get("fclid") || "",
+    landing_page: window.location.href,
+  };
+}
+
+async function getBatchDate() {
+  const csvUrl =
+    "https://docs.google.com/spreadsheets/d/1G-c1j0iATcTAdbHzWWI4b8-vVfrQJvNKvQ5KlyvBTkU/export?format=csv&gid=0";
+
+  const response = await fetch(csvUrl);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch batch date");
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setMessage("");
+  const csvText = await response.text();
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+  const rows = csvText
+    .trim()
+    .split(/\r?\n/)
+    .map(
+      (row) =>
+        row
+          .match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
+          ?.map((cell) => cell.replace(/^"|"$/g, "").trim()) || []
+    );
 
-    const name = String(formData.get("lead_name") || "").trim();
-    const phone = String(formData.get("lead_phone") || "").trim();
-    const email = String(formData.get("lead_email") || "").trim();
-    const profession = String(formData.get("profession") || "").trim();
-    const reason = String(formData.get("reason") || "").trim();
+  return rows[1]?.[0] || "";
+}
 
-    if (!name || !phone || !email || !profession || !reason) {
-      setMessage("Please fill all details.");
-      return;
-    }
+async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  setMessage("");
 
-    try {
-      setLoading(true);
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
-      const utms = getUtmParams();
+  const name = String(formData.get("lead_name") || "").trim();
+  const phone = String(formData.get("lead_phone") || "").trim();
+  const email = String(formData.get("lead_email") || "").trim();
+  const profession = String(formData.get("profession") || "").trim();
+  const reason = String(formData.get("reason") || "").trim();
 
-      const response = await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          profession,
-          reason,
-
-          ...utms,
-
-          source: "LP Register Form",
-          page_url: window.location.href,
-          submitted_at: new Date().toISOString(),
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Webhook failed");
-      }
-
-      window.location.href = "/mma-ty-fb1";
-    } catch (error) {
-      console.error(error);
-      setMessage("Something went wrong. Please try again.");
-      setLoading(false);
-    }
+  if (!name || !phone || !email || !profession || !reason) {
+    setMessage("Please fill all details.");
+    return;
   }
 
+  try {
+    setLoading(true);
+
+    const utms = getUtmParams();
+    const batchDate = await getBatchDate();
+
+    const response = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        phone,
+        email,
+        profession,
+        reason,
+
+        ...utms,
+
+        batch_number: batchDate,
+
+        source: "LP Register Form",
+        page_url: window.location.href,
+        submitted_at: new Date().toISOString(),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Webhook failed");
+    }
+
+    window.location.href = "/mma-ty-fb1";
+  } catch (error) {
+    console.error(error);
+    setMessage("Something went wrong. Please try again.");
+    setLoading(false);
+  }
+}
   return (
     <section id="register" className="bg-[#fbf6ee] px-4 py-12 pb-28 md:py-16">
       <div className="mx-auto max-w-[560px]">
