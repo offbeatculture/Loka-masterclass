@@ -170,44 +170,34 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
               </div>
             </div>
 
-            <div>
-              <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
-                Profession
-              </label>
-              <div className="flex h-[58px] items-center gap-4 rounded-2xl border border-[#d8d0ca] bg-white px-5">
-                <Briefcase className="h-5 w-5 shrink-0 text-[#ad284c]" />
-                <select
-                  name="profession"
-                  defaultValue=""
-                  className="w-full bg-transparent text-[16px] font-semibold text-[#062453] outline-none"
-                >
-                  <option value="" disabled>
-                    Select your profession
-                  </option>
-                  <option value="Business Owner">Business Owner</option>
-                  <option value="Founder / Entrepreneur">
-                    Founder / Entrepreneur
-                  </option>
-                  <option value="Coach / Consultant">
-                    Coach / Consultant
-                  </option>
-                  <option value="Agency Owner">Agency Owner</option>
-                  <option value="D2C / Ecommerce Founder">
-                    D2C / Ecommerce Founder
-                  </option>
-                  <option value="Service Business Owner">
-                    Service Business Owner
-                  </option>
-                  {/* <option value="Retailer">Retailer</option> */}
-                  <option value="Student">Student</option>
-                  <option value="Working Professional">
-                    Working Professional
-                  </option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-            </div>
-
+           <div>
+  <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
+    Profession
+  </label>
+  <div className="flex h-[58px] items-center gap-4 rounded-2xl border border-[#d8d0ca] bg-white px-5">
+    <Briefcase className="h-5 w-5 shrink-0 text-[#ad284c]" />
+    <select
+      name="profession"
+      defaultValue=""
+      className="w-full bg-transparent text-[16px] font-semibold text-[#062453] outline-none"
+    >
+      <option value="" disabled>
+        Select your profession
+      </option>
+      <option value="Business Owner / Entrepreneur">
+        Business Owner / Entrepreneur
+      </option>
+      <option value="Working Professional">Working Professional</option>
+      <option value="Freelancer / Self-Employed">
+        Freelancer / Self-Employed
+      </option>
+      <option value="Student / Recent Graduate">
+        Student / Recent Graduate
+      </option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+</div>
             <div>
               <label className="mb-2 block text-left text-[16px] font-extrabold text-[#062453]">
                 Reason for Joining
